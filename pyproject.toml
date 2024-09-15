@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "endstone-color-motd"
+version = "0.1.0"
+dependencies = []
+authors = [
+    { name = "Huang FTS427", email = "FTS427@outlook.com" },
+]
+description = "Set a dynamical and colorful motd for your server"
+readme = "README.md"
+license = { file = "LICENSE" }
+keywords = ["endstone", "plugin"]
+
+[project.urls]
+Homepage = "https://github.com/ZH-Server/endstone_color_motd"
+
+[project.entry-points."endstone"]
+color-motd = "endstone_color_motd:ColorMotd"
