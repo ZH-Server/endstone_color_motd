@@ -16,12 +16,12 @@ class ColorMotd(Plugin):
         self.load_config()
         self.server.scheduler.run_task(self, self.change_motd, delay=0, period=self.update_period)
     
-    def change_motd(self) -> None:
-        ServerListPingEvent.motd = self.first_motd
+    def change_motd(self, event: ServerListPingEvent) -> None:
+        event.motd = self.first_motd
         self.server.scheduler.run_task(self, self.change_motd, delay=self.update_period)
-        ServerListPingEvent.motd = self.second_motd
+        event.motd = self.second_motd
         self.server.scheduler.run_task(self, self.change_motd, delay=self.update_period)
-        ServerListPingEvent.motd = self.third_motd
+        event.motd = self.third_motd
     
     def load_config(self) -> None:
         self.update_period = self.config["update_period"]
