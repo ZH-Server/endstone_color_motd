@@ -1,17 +1,31 @@
 from endstone.plugin import Plugin
-from endstone import ColorFormat
 from endstone.event import ServerListPingEvent
-import time
 
 class ColorMotd(Plugin):
     api_version = "0.5"
 
+    def __init__(self):
+        super().__init__()
+        self.update_period: int = 20
+        self.first_motd: str = ""
+        self.second_motd: str = ""
+        self.third_motd: str = ""
+
     def on_enable(self) -> None:
-        self.server.scheduler.run_task(self, self.change_motd, delay=0, period=100)
+        self.save_default_config()
+        self.load_config()
+        self.server.scheduler.run_task(self, self.change_motd, delay=0, period=self.update_period)
     
     def change_motd(self) -> None:
-        ServerListPingEvent.motd.setter("Welcome to " + ColorFormat.BOLD + ColorFormat.MATERIAL_DIAMOND + "ZH-Server" + ColorFormat.RESET + " !")
-        time.sleep(5)
-        ServerListPingEvent.motd.setter("Powered by " + ColorFormat.BOLD + ColorFormat.YELLOW + "Endstone" + ColorFormat.RESET)
-        time.sleep(5)
-        ServerListPingEvent.motd.setter("Have fun!")
+        ServerListPingEvent.motd = self.first_motd
+        self.server.scheduler.run_task(self, self.change_motd, delay=self.update_period)
+        ServerListPingEvent.motd = self.second_motd
+        self.server.scheduler.run_task(self, self.change_motd, delay=self.update_period)
+        ServerListPingEvent.motd = self.third_motd
+    
+    def load_config(self) -> None:
+        self.update_period = self.config["update_period"]
+        self.first_motd = self.config["first_motd"]
+        self.second_motd = self.config["second_motd"]
+        self.third_motd = self.config["third_motd"]
+
