@@ -1,5 +1,5 @@
 from endstone.plugin import Plugin
-from endstone.event import ServerListPingEvent
+from endstone.event import ServerListPingEvent, event_handler
 
 class ColorMotd(Plugin):
     api_version = "0.5"
@@ -14,18 +14,19 @@ class ColorMotd(Plugin):
     def on_enable(self) -> None:
         self.save_default_config()
         self.load_config()
-        self.server.scheduler.run_task(self, self.change_motd, delay=0, period=self.update_period)
-    
+        self.register_events(self)
+ 
+    @event_handler
     def change_motd(self, event: ServerListPingEvent) -> None:
         event.motd = self.first_motd
-        self.server.scheduler.run_task(self, self.change_motd, delay=self.update_period)
+        self.server.scheduler.run_task(self, self.change_motd, delay = self.update_period)
         event.motd = self.second_motd
-        self.server.scheduler.run_task(self, self.change_motd, delay=self.update_period)
+        self.server.scheduler.run_task(self, self.change_motd, delay = self.update_period)
         event.motd = self.third_motd
+        self.server.scheduler.run_task(self, self.change_motd, delay = self.update_period)
     
     def load_config(self) -> None:
         self.update_period = self.config["update_period"]
         self.first_motd = self.config["first_motd"]
         self.second_motd = self.config["second_motd"]
         self.third_motd = self.config["third_motd"]
-
