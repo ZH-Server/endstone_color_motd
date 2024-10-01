@@ -1,6 +1,8 @@
 # flush time, unit: gt
 update_period = 20
 
-first_motd = "awa"
-second_motd = "ovo"
-third_motd = "qwq"
+motd = [
+    "awa",
+    "ovo",
+    "qwq"
+]
