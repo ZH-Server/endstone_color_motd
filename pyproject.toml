@@ -9,7 +9,7 @@ dependencies = []
 authors = [
     { name = "Huang FTS427", email = "FTS427@outlook.com" },
 ]
-description = "Set a dynamical and colorful motd for your server"
+description = "Set a motd for your server"
 readme = "README.md"
 license = { file = "LICENSE" }
 keywords = ["endstone", "plugin"]

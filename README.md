@@ -1,6 +1,6 @@
 # Endstone Color Motd Plugin
 
-Set a dynamical and colorful motd for your server.
+Set a motd for your server.
 
 ## Install
 

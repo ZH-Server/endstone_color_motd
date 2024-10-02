@@ -1,8 +1,1 @@
-# flush time, unit: gt
-update_period = 20
-
-motd = [
-    "awa",
-    "ovo",
-    "qwq"
-]
+motd = "Welcome!"
